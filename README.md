@@ -20,16 +20,16 @@ Then ask Claude:
 
 The skill can also activate when a request matches API-provider comparison. In Claude Code, `/mcp` shows whether the Haggly connection is available. If you already configured Haggly manually, use one connection when reviewing the plugin to avoid duplicate tools.
 
-## Install from the private review repo
+## Install
 
-Install from the private GitHub repository:
+Install from the GitHub marketplace:
 
 ```sh
 claude plugin marketplace add mckenziefuk/haggly-claude-plugin
 claude plugin install haggly@haggly-plugins
 ```
 
-Only users with access to the private repository can install from it. GitHub authentication must already be available to their git client. The marketplace name is `haggly-plugins`; the plugin name is `haggly`.
+The marketplace name is `haggly-plugins`; the plugin name is `haggly`.
 
 Local validation uses Claude Code's plugin and marketplace validator:
 
@@ -37,7 +37,7 @@ Local validation uses Claude Code's plugin and marketplace validator:
 claude plugin validate --strict .
 ```
 
-Use Claude Code 2.1.281 or newer to validate the directory listing fields and remote MCP configuration. See [docs/RELEASING.md](docs/RELEASING.md) for private-repo setup and later publication.
+Use Claude Code 2.1.281 or newer to validate the directory listing fields and remote MCP configuration. See [docs/RELEASING.md](docs/RELEASING.md) for release validation and directory submission.
 
 ## What the plugin adds
 

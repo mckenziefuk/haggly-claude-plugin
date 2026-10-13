@@ -25,7 +25,21 @@ Use Haggly's connected MCP server to find providers for the user's task. Its fou
 - MCP alternatives are unscored and have unpublished pricing. Their `up` or `sign-in` status indicates a successful handshake, not free usage or proven task quality. Mention account requirements and unknown prices.
 - Results can be cached for five minutes. Use the returned data timestamp where available, and describe checks as historical evidence rather than a guarantee.
 
-Warnings include `wallet-mismatch`, `price-mismatch`, `few-repeat-buyers`, `unusual-seller-traffic` and `test-listing`. Filtering removes matching results; warnings do not exclude endpoints automatically.
+## Warning filters (`hide_flags`)
+
+Use these IDs to exclude endpoints carrying warnings the user wants to avoid:
+
+| Flag | Meaning |
+| --- | --- |
+| `wallet-mismatch` | The payout wallet in the observed payment response differs from the catalogue's wallet on the same network. |
+| `price-mismatch` | The observed payment-response price differs from the catalogue's listed price. |
+| `few-repeat-buyers` | Most paying wallets called only once, a pattern associated with crawlers or volume farming. Haggly halves the usage contribution to the score. |
+| `unusual-seller-traffic` | The seller shows potentially manufactured usage, such as paid calls to trivial endpoints or near-identical payer counts across endpoints. Haggly halves the usage contribution to the score. |
+| `test-listing` | The name, host or route identifies a test or demo deployment. It can still be used, but never becomes the Haggly Pick. |
+
+Pass an MCP array such as `hide_flags: ["wallet-mismatch", "price-mismatch"]`. An endpoint with any selected warning is excluded. Warnings do not exclude endpoints automatically; use the user's requested exclusions and explain warnings on retained results. These are evidence-based warnings, not proof of fraud.
+
+In JSON, `hiddenFlags` reports the warning filters applied to the comparison; each result's `flags` reports its own warnings and informational flags. `no-usage-data`, `testnet-only` and `reported-by-apify` are informational IDs, not valid `hide_flags` values. See [references/api.md](references/api.md) for their meanings and the HTTP filter syntax.
 
 ## Recommend a provider
 
