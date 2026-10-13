@@ -1,0 +1,15 @@
+{
+  "name": "haggly-plugins",
+  "description": "Haggly plugins for comparing agent API providers on price, reliability and usage.",
+  "owner": {
+    "name": "Haggly",
+    "email": "hello@hagglyai.com"
+  },
+  "plugins": [
+    {
+      "name": "haggly",
+      "source": "./",
+      "description": "Compare agent API providers using Haggly's read-only MCP tools and comparison skill."
+    }
+  ]
+}

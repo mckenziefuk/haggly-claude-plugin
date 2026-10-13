@@ -1,0 +1,20 @@
+{
+  "name": "haggly",
+  "displayName": "Haggly",
+  "version": "0.1.0",
+  "description": "Compare agent API providers on price, reliability and usage, with Haggly's read-only MCP tools and comparison skill.",
+  "author": {
+    "name": "Haggly",
+    "email": "hello@hagglyai.com",
+    "url": "https://hagglyai.com"
+  },
+  "homepage": "https://hagglyai.com/for-agents",
+  "repository": "https://github.com/mckenziefuk/haggly-claude-plugin",
+  "license": "MIT",
+  "keywords": ["api", "comparison", "mcp", "x402", "apify", "pricing"],
+  "icon": "./assets/icon.png",
+  "documentationUrl": "https://hagglyai.com/for-agents",
+  "supportUrl": "https://hagglyai.com/for-agents",
+  "privacyPolicyUrl": "https://hagglyai.com/privacy",
+  "termsOfServiceUrl": "https://hagglyai.com/terms"
+}
