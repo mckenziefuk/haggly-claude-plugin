@@ -1,8 +1,8 @@
 {
   "name": "haggly",
   "displayName": "Haggly",
-  "version": "0.1.1",
-  "description": "Compare agent API providers on price, reliability and usage, with Haggly's read-only MCP tools and comparison skill.",
+  "version": "0.2.0",
+  "description": "Compare agent API providers by platform, task and paid provider rail using Haggly's read-only price, reliability and usage tools.",
   "author": {
     "name": "Haggly",
     "email": "hello@hagglyai.com",

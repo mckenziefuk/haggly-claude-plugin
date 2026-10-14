@@ -23,8 +23,19 @@ Run `claude plugin validate --strict .`. Try `claude --plugin-dir .` and check `
 - Compare weather options by cheapest price. Check that the skill uses the HTTP category route because MCP has no explicit sort parameter.
 - Check an exact tracked endpoint URL. Check that warnings and dated probe evidence appear in the explanation.
 - Ask for a task outside the catalogue. Check that category suggestions or coverage limitations are reported without invented providers.
+- Discover a category's platform and task IDs with `list_categories`. Check that only live IDs are used and that discovery counts are described as category-wide.
+- Compare Instagram or TikTok comments with `platform: ["instagram", "tiktok"]`, `task: ["comments"]` and `rail: ["x402"]`, after confirming those IDs are available. Check that alternatives within a facet use OR, platform and task restrictions use AND, and paid rows use the requested rail. Separately listed MCP alternatives remain category-wide.
+- Repeat a filtered category comparison over HTTP. Check that JSON uses comma-separated IDs, category pages use repeated parameters, and returned `selected` fields and row rails confirm the restriction.
+- Ask `find_best` for a specific platform and task with no matches. Check that any automatic widening is disclosed and broader results are not presented as satisfying the original restrictions.
+- Try an unknown sub-category ID or a server exposing the old tool schema. Check that unsupported filtering is reported; ignored parameters must not be treated as successful filtering.
 
 These are manual review examples, not automated evals. Install the plugin from the GitHub marketplace once to verify the repository packaging as well as the local folder. Installing it creates Claude plugin settings on the reviewer's machine.
+
+## Version 0.2.0 backend requirements
+
+The platform, task and rail contract matches the Codex plugin's v0.2.0 guidance. It was checked against the Haggly feature worktree `worktree-more-sources` at commit `6230538`, including `src/mcp/server.ts`, `src/api/routes.ts` and `src/catalog/subcategories.ts`. Updating this plugin does not merge or deploy that backend feature.
+
+Before exercising filters, confirm the connected server advertises `platform`, `task` and `rail` in `compare_category`. For HTTP comparisons, confirm the live OpenAPI parameters and returned `selected` fields. An older service can ignore unknown query parameters and return an unrestricted comparison. The skill explicitly checks support and applied filters.
 
 ## Distribution and directory submission
 
@@ -42,7 +53,7 @@ Official references:
 
 ## Updates
 
-Keep `haggly` as the permanent plugin name and `haggly-plugins` as the marketplace name. Increment `version` in `plugin.json` for each release. Update the skill and HTTP reference when the Haggly tool contract or pricing semantics change; the live OpenAPI schema remains on the service.
+Keep `haggly` as the permanent plugin name and `haggly-plugins` as the marketplace name. Increment `version` in `.claude-plugin/plugin.json` for each release. Update the skill and HTTP reference when the Haggly tool contract or pricing semantics change; the live OpenAPI schema remains on the service.
 
 To update an installed marketplace copy:
 

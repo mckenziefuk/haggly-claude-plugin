@@ -1,6 +1,6 @@
 # Haggly for Claude
 
-Compare API providers for your agent's next task using Haggly's listed prices, recent availability, latency and usage evidence. Haggly covers x402 pay-per-call APIs, Apify actors and MCP alternatives, with a comparison skill and a connection to its hosted MCP server.
+Compare API providers for your agent's next task using Haggly's listed prices, recent availability, latency and usage evidence. Narrow paid comparisons by platform, task and provider rail. Haggly covers x402 pay-per-call APIs, Apify actors and MCP alternatives, with a comparison skill and a connection to its hosted MCP server.
 
 Querying Haggly is free and requires no account or API key. The plugin helps you choose a provider; provider subscriptions, paid requests and payments are separate.
 
@@ -16,6 +16,12 @@ Then ask Claude:
 
 ```text
 /haggly:compare Find web-search providers under $0.01 per call and explain the tradeoffs.
+```
+
+To review sub-category filtering, try:
+
+```text
+/haggly:compare Compare Instagram or TikTok comment providers on x402. Discover the available IDs first and explain which filters were applied.
 ```
 
 The skill can also activate when a request matches API-provider comparison. In Claude Code, `/mcp` shows whether the Haggly connection is available. If you already configured Haggly manually, use one connection when reviewing the plugin to avoid duplicate tools.
@@ -41,7 +47,7 @@ Use Claude Code 2.1.281 or newer to validate the directory listing fields and re
 
 ## What the plugin adds
 
-- `/haggly:compare`: a skill for discovering, comparing and checking providers, including per-call budgets, unit-price differences, extra fees and evidence limitations.
+- `/haggly:compare`: a skill for discovering, comparing and checking providers, including platform, task and paid provider rail filters, per-call budgets, unit-price differences, extra fees and evidence limitations.
 - `haggly` MCP connection: `https://hagglyai.com/mcp`, using Streamable HTTP.
 - An HTTP reference for JSON and markdown access when explicit sorting is needed or MCP is unavailable.
 
@@ -49,12 +55,20 @@ The hosted server exposes four read-only tools:
 
 | Tool | Use |
 | --- | --- |
-| `find_best` | Find candidates for a plain-language task, optionally within a per-call budget |
-| `compare_category` | Return a category's comparison using Haggly's best-value ordering |
+| `find_best` | Infer a category and sub-categories from a task, optionally within a per-call budget |
+| `compare_category` | Compare a category with optional platform, task and paid-rail filters |
 | `check_endpoint` | Read stored price, warnings and recent checks for an exact endpoint URL |
-| `list_categories` | List supported category IDs and their counts and prices |
+| `list_categories` | Discover categories, pricing summaries and available platform/task IDs |
 
 Haggly's MCP tools return markdown. The JSON API additionally supports explicit `cheapest`, `most_reliable` and `fastest` sorts. The [live OpenAPI schema](https://hagglyai.com/openapi.json) is the maintained contract; this repository does not duplicate the service implementation or a snapshot of the catalogue.
+
+## Sub-category comparisons
+
+Discover current platform and task IDs with `list_categories`, then pass arrays to `compare_category`. For example, `platform: ["instagram", "tiktok"]` with `task: ["comments"]` matches comments on either platform. Platform and task restrictions combine; each array can match any of its values. The platform facet may be labelled Model, Chain, Search engine or another category-specific name, while the tool parameter remains `platform`.
+
+`rail: ["x402"]` and `rail: ["apify"]` select the paid provider rail; omit it to include both. These filters apply to paid rows, while separately listed MCP alternatives remain category-wide. `find_best` infers sub-categories from request text and can widen an empty result, so the skill checks what was actually applied and preserves explicit user restrictions.
+
+Sub-category support also requires the updated backend to be deployed at the configured MCP URL. Older servers expose the original schema. The skill checks availability and reports missing filter support instead of treating broader results as matching a restriction. See [the API reference](skills/compare/references/api.md) for filter formats and result fields.
 
 ## Reading comparisons
 
